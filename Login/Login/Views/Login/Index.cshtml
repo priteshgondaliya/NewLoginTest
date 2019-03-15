@@ -1,0 +1,75 @@
+﻿@model Login.Model.ViewModel.LoginView
+
+@{
+    /**/
+
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="google-site-verification" content="Jw-MbolsM-WbTzLqMYBXIbI2Fl6C8NR5XSKOcTNmcSM" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            margin: 20pt !important;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'
+          media="screen" />
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            @using (Html.BeginForm("LoginPost", "Login", FormMethod.Post))
+            {
+
+                <h2 class="form-signin-heading">
+                    Login
+                </h2>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" })
+                </div>
+                <br><br>
+                <input type="hidden" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
+                <input type="submit" value="Login" class="btn btn-primary btn-custom center-block" />
+                <br />
+                <br />
+                <div id="dvMessage" style="display:none" class="alert alert-danger">
+                    <strong>Error!</strong>
+                    <span>@ViewBag.Message</span>
+                </div>
+
+            }
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @if (@ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $("#dvMessage").show();
+            });
+        </script>
+    }
+</body>
+</html>
